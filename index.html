@@ -67,6 +67,7 @@
             margin-bottom: 20px;
             color: #fff;
         }
+        /* Skip button */
         #skipBtn {
             position: absolute;
             top: 15px;
@@ -83,49 +84,11 @@
         #skipBtn:hover {
             background: #444;
         }
-        #buttonsContainer button {
-            padding: 10px 20px;
-            font-size: 1em;
-            border: none;
-            border-radius: 8px;
-            margin: 5px;
-            cursor: pointer;
-            background-color: #f44336;
-            color: white;
-        }
-        #buttonsContainer button:hover {
-            background-color: #b71c1c;
-        }
-        #audioBtn {
-            padding: 10px 20px;
-            font-size: 1em;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: #2196F3;
-            color: white;
-            margin-bottom: 20px;
-        }
-        #audioBtn:hover {
-            background-color: #1565C0;
-        }
-        video {
-            display: none;
-            width: 80%;
-            max-width: 600px;
-            margin-top: 20px;
-            border: 4px solid white;
-            border-radius: 10px;
-        }
     </style>
 </head>
 <body>
     <!-- Skip timer -->
-    <button id="skipBtn">Passer le compte à rebours</button>
-
-    <!-- Audio button -->
-    <button id="audioBtn">🎵 Jouer la musique</button>
-    <audio id="birthdayAudio" src="birthday_song.mp3"></audio>
+    <button id="skipBtn">Skip Timer</button>
 
     <!-- Envelope -->
     <div id="envelope">📩</div>
@@ -136,45 +99,24 @@
 
     <div id="message">🎂 Joyeux 19ème anniversaire, Camille! ❤️</div>
 
-    <!-- Knappcontainer -->
-    <div id="buttonsContainer" style="display:none; margin-top:20px;">
-        <button id="btnVideo">🎬 Jouer la vidéo</button>
-        <button id="btnOption2">Option 2</button>
-        <button id="btnOption3">Option 3</button>
-    </div>
-
-    <!-- Video -->
-    <video id="birthdayVideo" controls>
-        <source src="video.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la vidéo.
-    </video>
-
     <script>
         const message = document.getElementById("message");
         const h1 = document.querySelector("h1");
         const timerDiv = document.getElementById("timer");
         const skipBtn = document.getElementById("skipBtn");
+
+        // Envelope logic
         const envelope = document.getElementById("envelope");
         const popupMessage = document.getElementById("popupMessage");
-        const buttonsContainer = document.getElementById("buttonsContainer");
-        const birthdayVideo = document.getElementById("birthdayVideo");
-        const audioBtn = document.getElementById("audioBtn");
-        const birthdayAudio = document.getElementById("birthdayAudio");
         let countdownFinished = false;
 
-        // Spela musik-knapp
-        audioBtn.addEventListener("click", () => {
-            birthdayAudio.play();
-        });
-
-        // Envelope click
         envelope.addEventListener("click", () => {
             if (!countdownFinished) {
                 popupMessage.textContent = "Patiente jusqu’à la fin du compte à rebours pour l’ouvrir ❤️";
                 popupMessage.style.display = "block";
                 setTimeout(() => popupMessage.style.display = "none", 3000);
             } else {
-                buttonsContainer.style.display = "block";
+                window.location.href = "surprise.html"; // gå till ny sida
             }
         });
 
@@ -196,6 +138,7 @@
         // Countdown date
         const countDownDate = new Date("Aug 20, 2025 00:00:00").getTime();
 
+        // Timer update
         function finishCountdown() {
             countdownFinished = true;
             document.body.style.background = "#000"; 
@@ -221,29 +164,13 @@
             }
         }, 1000);
 
+        // Skip timer button
         skipBtn.addEventListener("click", () => {
             clearInterval(countdownInterval);
             finishCountdown();
         });
-
-        // Video-knapp
-        const btnVideo = document.getElementById("btnVideo");
-        btnVideo.addEventListener("click", () => {
-            birthdayVideo.style.display = "block";
-            birthdayVideo.play();
-        });
-
-        const btnOption2 = document.getElementById("btnOption2");
-        btnOption2.addEventListener("click", () => {
-            alert("Option 2 cliquée!");
-        });
-        const btnOption3 = document.getElementById("btnOption3");
-        btnOption3.addEventListener("click", () => {
-            alert("Option 3 cliquée!");
-        });
     </script>
 </body>
 </html>
-
 
 
