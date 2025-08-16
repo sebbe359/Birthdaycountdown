@@ -84,6 +84,20 @@
         #skipBtn:hover {
             background: #444;
         }
+        /* Knappcontainer */
+        #buttonsContainer button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #f44336;
+            color: white;
+        }
+        #buttonsContainer button:hover {
+            background-color: #b71c1c;
+        }
     </style>
 </head>
 <body>
@@ -99,24 +113,31 @@
 
     <div id="message">🎂 Joyeux 19ème anniversaire, Camille! ❤️</div>
 
+    <!-- Knappcontainer som visas efter nedräkningen -->
+    <div id="buttonsContainer" style="display:none; margin-top:20px;">
+        <button id="btnVideo">🎬 Video Spelning</button>
+        <button id="btnOption2">Option 2</button>
+        <button id="btnOption3">Option 3</button>
+    </div>
+
     <script>
         const message = document.getElementById("message");
         const h1 = document.querySelector("h1");
         const timerDiv = document.getElementById("timer");
         const skipBtn = document.getElementById("skipBtn");
-
-        // Envelope logic
         const envelope = document.getElementById("envelope");
         const popupMessage = document.getElementById("popupMessage");
+        const buttonsContainer = document.getElementById("buttonsContainer");
         let countdownFinished = false;
 
+        // Envelope click
         envelope.addEventListener("click", () => {
             if (!countdownFinished) {
                 popupMessage.textContent = "Patiente jusqu’à la fin du compte à rebours pour l’ouvrir ❤️";
                 popupMessage.style.display = "block";
                 setTimeout(() => popupMessage.style.display = "none", 3000);
             } else {
-                window.location.href = "surprise.html"; // gå till ny sida
+                buttonsContainer.style.display = "block";
             }
         });
 
@@ -169,7 +190,24 @@
             clearInterval(countdownInterval);
             finishCountdown();
         });
+
+        // Video-knapp
+        const btnVideo = document.getElementById("btnVideo");
+        btnVideo.addEventListener("click", () => {
+            alert("Här kan du starta videospelningen!");
+        });
+
+        // Andra knappar kan du fylla i senare
+        const btnOption2 = document.getElementById("btnOption2");
+        btnOption2.addEventListener("click", () => {
+            alert("Option 2 klickad!");
+        });
+        const btnOption3 = document.getElementById("btnOption3");
+        btnOption3.addEventListener("click", () => {
+            alert("Option 3 klickad!");
+        });
     </script>
 </body>
 </html>
+
 
