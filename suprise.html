@@ -1,62 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ta surprise ❤️</title>
-  <style>
-    body {
-      background: black;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
-    }
-    button {
-      font-size: 1.5em;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 12px;
-      background-color: #b71c1c;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #f44336;
-    }
-    video {
-      margin-top: 30px;
-      max-width: 90%;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Surprise 🎥</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        video {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
 <body>
-  <h1>🎁 Voici ta surprise 🎁</h1>
-  <button id="playBtn">Spela video</button>
-  <video id="video" controls>
-    <source src="video.mp4" type="video/mp4">
-    Ton navigateur ne supporte pas la vidéo.
-  </video>
+    <video id="video" autoplay playsinline>
+        <source src="video.mp4" type="video/mp4">
+        Ton navigateur ne supporte pas la vidéo.
+    </video>
 
-  <script>
-    const playBtn = document.getElementById("playBtn");
-    const video = document.getElementById("video");
+    <script>
+        const video = document.getElementById("video");
 
-    playBtn.addEventListener("click", () => {
-      video.style.display = "block";
-      video.play();
-      playBtn.style.display = "none";
-    });
-  </script>
+        // Försök att spela upp med ljud direkt
+        video.muted = true;
+        video.play().then(() => {
+            video.muted = false;
+            video.play();
+        }).catch(err => {
+            console.log("Autoplay med ljud blockerat, användaren måste klicka:", err);
+        });
+    </script>
 </body>
 </html>
+
