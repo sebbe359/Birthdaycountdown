@@ -11,29 +11,36 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
         video {
             max-width: 100%;
             max-height: 100%;
+            display: none; /* Initially hidden */
+        }
+        #play-letter {
+            font-size: 15em;
+            color: white;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
         }
     </style>
 </head>
 <body>
-    <video id="video" autoplay playsinline>
+    <div id="play-letter">C</div>
+    <video id="video" playsinline>
         <source src="video.mp4" type="video/mp4">
         Ton navigateur ne supporte pas la vidéo.
     </video>
 
     <script>
         const video = document.getElementById("video");
+        const playLetter = document.getElementById("play-letter");
 
-        // Försök att spela upp med ljud direkt
-        video.muted = true;
-        video.play().then(() => {
-            video.muted = false;
+        playLetter.addEventListener("click", () => {
+            playLetter.style.display = "none";
+            video.style.display = "block";
             video.play();
-        }).catch(err => {
-            console.log("Autoplay med ljud blockerat, användaren måste klicka:", err);
         });
     </script>
 </body>
