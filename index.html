@@ -87,6 +87,9 @@
     </style>
 </head>
 <body>
+    <audio id="bgMusic" src="les.mp3" autoplay loop muted></audio>
+    <button id="unmuteBtn" style="position: absolute; top: 15px; left: 15px; padding: 10px 20px; background: black; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9em; z-index: 2000;">Unmute Music</button>
+
     <!-- Skip timer -->
     <button id="skipBtn">Skip Timer</button>
 
@@ -100,6 +103,19 @@
     <div id="message">🎂 Joyeux 19ème anniversaire, Camille! ❤️</div>
 
     <script>
+        const audio = document.getElementById("bgMusic");
+        const unmuteBtn = document.getElementById("unmuteBtn");
+
+        unmuteBtn.addEventListener("click", () => {
+            if (audio.muted) {
+                audio.muted = false;
+                unmuteBtn.textContent = "Mute Music";
+            } else {
+                audio.muted = true;
+                unmuteBtn.textContent = "Unmute Music";
+            }
+        });
+
         const message = document.getElementById("message");
         const h1 = document.querySelector("h1");
         const timerDiv = document.getElementById("timer");
@@ -172,5 +188,4 @@
     </script>
 </body>
 </html>
-
 
