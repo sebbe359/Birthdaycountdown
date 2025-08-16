@@ -34,13 +34,9 @@
             margin-top: 1em;
             animation: fadeIn 3s ease-in-out forwards;
         }
-        #video {
-            display: none;
-            margin-top: 20px;
-        }
         .heart {
             position: fixed;
-            top: 0; /* start at very top */
+            top: 0;
             width: 30px;
             height: 30px;
             background-color: red;
@@ -53,12 +49,8 @@
             z-index: 1000;
         }
         @keyframes fall {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(100vh);
-            }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -81,7 +73,6 @@
         #startAudioBtn:hover {
             background-color: #b71c1c;
         }
-        /* Envelope styles */
         #envelope {
             font-size: 5em;
             cursor: pointer;
@@ -93,9 +84,29 @@
             margin-bottom: 20px;
             color: #fff;
         }
+        /* Skip button */
+        #skipBtn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 10px 20px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            z-index: 2000;
+        }
+        #skipBtn:hover {
+            background: #444;
+        }
     </style>
 </head>
 <body>
+    <!-- Skip timer -->
+    <button id="skipBtn">Skip Timer</button>
+
     <!-- Envelope -->
     <div id="envelope">📩</div>
     <div id="popupMessage"></div>
@@ -108,20 +119,13 @@
 
     <div id="message">🎂 Joyeux 19ème anniversaire, mon amour! ❤️</div>
 
-    <div id="video">
-        <video width="500" controls autoplay>
-            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            Ton navigateur ne supporte pas la vidéo.
-        </video>
-    </div>
-
     <script>
         const audio = document.getElementById("birthdaySong");
         const btn = document.getElementById("startAudioBtn");
         const message = document.getElementById("message");
-        const video = document.getElementById("video");
         const h1 = document.querySelector("h1");
         const timerDiv = document.getElementById("timer");
+        const skipBtn = document.getElementById("skipBtn");
 
         // Envelope logic
         const envelope = document.getElementById("envelope");
@@ -134,8 +138,7 @@
                 popupMessage.style.display = "block";
                 setTimeout(() => popupMessage.style.display = "none", 3000);
             } else {
-                popupMessage.textContent = "Voici ta surprise : Je t’aime plus que tout ❤️";
-                popupMessage.style.display = "block";
+                window.location.href = "surprise.html"; // gå till ny sida
             }
         });
 
@@ -154,8 +157,8 @@
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + "vw"; // random horizontal position
-            heart.style.animationDuration = (Math.random() * 3 + 3) + "s"; // between 3 and 6 seconds
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
             heart.style.opacity = (Math.random() * 0.5 + 0.5);
             document.body.appendChild(heart);
 
@@ -168,7 +171,15 @@
         // Countdown date
         const countDownDate = new Date("Aug 20, 2025 00:00:00").getTime();
 
-        // Countdown timer
+        // Timer update
+        function finishCountdown() {
+            countdownFinished = true;
+            document.body.style.background = "#000"; 
+            h1.style.display = "none";
+            timerDiv.style.display = "none";
+            message.style.display = "block";
+        }
+
         let countdownInterval = setInterval(() => {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -182,24 +193,15 @@
                 timerDiv.textContent = `${days}j ${hours}h ${minutes}m ${seconds}s`;
             } else {
                 clearInterval(countdownInterval);
-                countdownFinished = true; // ✅ Unlock envelope
-
-                document.body.style.background = "#000"; 
-                h1.style.display = "none";
-                timerDiv.style.display = "none";
-
-                message.style.display = "block";
-                video.style.display = "block";
-
-                audio.muted = false;
-                audio.play().then(() => {
-                    btn.style.display = "none";
-                }).catch(e => {
-                    console.warn("Autoplay bloqué, affichage du bouton");
-                    btn.style.display = "inline-block";
-                });
+                finishCountdown();
             }
         }, 1000);
+
+        // Skip timer button
+        skipBtn.addEventListener("click", () => {
+            clearInterval(countdownInterval);
+            finishCountdown();
+        });
     </script>
 </body>
 </html>
