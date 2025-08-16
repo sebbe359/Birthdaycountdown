@@ -56,23 +56,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        #startAudioBtn {
-            display: none;
-            font-size: 1.2em;
-            padding: 12px 28px;
-            margin-top: 20px;
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            background-color: #880e0e;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: background-color 0.3s ease;
-            user-select: none;
-        }
-        #startAudioBtn:hover {
-            background-color: #b71c1c;
-        }
         #envelope {
             font-size: 5em;
             cursor: pointer;
@@ -114,14 +97,9 @@
     <h1>Compte à rebours jusqu'à ton grand jour ! 🎉</h1>
     <div id="timer"></div>
 
-    <button id="startAudioBtn">Démarrer la musique</button>
-    <audio id="birthdaySong" src="les.mp3" loop muted autoplay></audio>
-
     <div id="message">🎂 Joyeux 19ème anniversaire, Camille! ❤️</div>
 
     <script>
-        const audio = document.getElementById("birthdaySong");
-        const btn = document.getElementById("startAudioBtn");
         const message = document.getElementById("message");
         const h1 = document.querySelector("h1");
         const timerDiv = document.getElementById("timer");
@@ -140,17 +118,6 @@
             } else {
                 window.location.href = "surprise.html"; // gå till ny sida
             }
-        });
-
-        // Show audio button
-        btn.style.display = "inline-block";
-        btn.addEventListener('click', () => {
-            audio.muted = false;
-            audio.play().then(() => {
-                btn.style.display = "none";
-            }).catch(e => {
-                console.error("Impossible de démarrer la musique:", e);
-            });
         });
 
         // Falling hearts
