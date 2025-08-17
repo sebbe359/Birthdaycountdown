@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -71,11 +67,11 @@
             margin-bottom: 20px;
             color: #fff;
         }
-        /* Skip button */
-        #skipBtn {
+        /* Unmute button */
+        #unmuteBtn {
             position: absolute;
             top: 15px;
-            right: 15px;
+            left: 15px;
             padding: 10px 20px;
             background: black;
             color: white;
@@ -85,7 +81,7 @@
             font-size: 0.9em;
             z-index: 2000;
         }
-        #skipBtn:hover {
+        #unmuteBtn:hover {
             background: #444;
         }
         /* Dold video */
@@ -96,10 +92,7 @@
 </head>
 <body>
     <audio id="bgMusic" src="les.mp3" autoplay loop muted></audio>
-    <button id="unmuteBtn" style="position: absolute; top: 15px; left: 15px; padding: 10px 20px; background: black; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9em; z-index: 2000;">Unmute Music</button>
-
-    <!-- Skip timer -->
-    <button id="skipBtn">Skip Timer</button>
+    <button id="unmuteBtn">Unmute Music</button>
 
     <!-- Envelope -->
     <div id="envelope">📩</div>
@@ -116,7 +109,15 @@
     <script>
         const audio = document.getElementById("bgMusic");
         const unmuteBtn = document.getElementById("unmuteBtn");
+        const envelope = document.getElementById("envelope");
+        const popupMessage = document.getElementById("popupMessage");
+        const birthdayVideo = document.getElementById("birthdayVideo");
+        const message = document.getElementById("message");
+        const h1 = document.querySelector("h1");
+        const timerDiv = document.getElementById("timer");
+        let countdownFinished = false;
 
+        // Toggle mute/unmute
         unmuteBtn.addEventListener("click", () => {
             if (audio.muted) {
                 audio.muted = false;
@@ -127,24 +128,18 @@
             }
         });
 
-        const message = document.getElementById("message");
-        const h1 = document.querySelector("h1");
-        const timerDiv = document.getElementById("timer");
-        const skipBtn = document.getElementById("skipBtn");
-
         // Envelope logic
-        const envelope = document.getElementById("envelope");
-        const popupMessage = document.getElementById("popupMessage");
-        const birthdayVideo = document.getElementById("birthdayVideo");
-        let countdownFinished = false;
-
         envelope.addEventListener("click", () => {
             if (!countdownFinished) {
                 popupMessage.textContent = "Patiente jusqu’à la fin du compte à rebours pour l’ouvrir ❤️";
                 popupMessage.style.display = "block";
                 setTimeout(() => popupMessage.style.display = "none", 3000);
             } else {
-                // Visa videon och försök spela den i helskärm
+                // Stäng av musiken när videon startar
+                audio.muted = true;
+                unmuteBtn.textContent = "Unmute Music";
+
+                // Visa video + spela i helskärm
                 birthdayVideo.style.display = "block";
                 birthdayVideo.play();
 
@@ -173,10 +168,9 @@
         }
         setInterval(createHeart, 300);
 
-        // Countdown date
+        // Countdown
         const countDownDate = new Date("Aug 20, 2025 00:00:00").getTime();
 
-        // Timer update
         function finishCountdown() {
             countdownFinished = true;
             document.body.style.background = "#000"; 
@@ -201,12 +195,6 @@
                 finishCountdown();
             }
         }, 1000);
-
-        // Skip timer button
-        skipBtn.addEventListener("click", () => {
-            clearInterval(countdownInterval);
-            finishCountdown();
-        });
     </script>
 </body>
 </html>
