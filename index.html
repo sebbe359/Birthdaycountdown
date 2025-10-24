@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
-    <title>Compte à rebours jusqu'à ton grand jour ! ❤️</title>
+    <title>Bonjour étranger</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -10,193 +10,24 @@
             background: linear-gradient(135deg, #b71c1c, #f44336);
             color: white;
             margin: 0;
-            padding: 0;
-            overflow: hidden;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
         h1 {
             font-size: 4em;
-            margin-bottom: 0.3em;
+            margin: 0;
         }
-        #timer {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 1em;
-            letter-spacing: 0.1em;
-        }
-        #message {
-            display: none;
-            font-size: 3.5em;
-            margin-top: 1em;
-            animation: fadeIn 3s ease-in-out forwards;
-        }
-        .heart {
-            position: fixed;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            background-color: red;
-            clip-path: polygon(50% 0%, 61% 11%, 75% 11%, 86% 22%, 86% 36%, 75% 47%, 50% 75%, 25% 47%, 14% 36%, 14% 22%, 25% 11%, 39% 11%);
-            animation-name: fall;
-            animation-timing-function: linear;
-            animation-iteration-count: 1;
-            opacity: 0.7;
-            pointer-events: none;
-            z-index: 1000;
-        }
-        @keyframes fall {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100vh); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        #envelope {
-            font-size: 5em;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        #popupMessage {
-            display: none;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-        /* Unmute button */
-        #unmuteBtn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            padding: 10px 20px;
-            background: black;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            z-index: 2000;
-        }
-        #unmuteBtn:hover {
-            background: #444;
-        }
-        /* Dold video */
-        #birthdayVideo {
-            display: none;
+        p {
+            font-size: 2em;
+            margin-top: 0.5em;
         }
     </style>
 </head>
 <body>
-    <!-- Bakgrundsmusik -->
-    <audio id="bgMusic" src="les.mp3" loop muted></audio>
-    <button id="unmuteBtn">Unmute Music</button>
-
-    <!-- Envelope -->
-    <div id="envelope">📩</div>
-    <div id="popupMessage"></div>
-
-    <h1>Compte à rebours jusqu'à ton grand jour ! 🎉</h1>
-    <div id="timer"></div>
-
-    <div id="message">🎂 Joyeux 19ème anniversaire, Camille! ❤️</div>
-
-    <!-- Video som spelas efter nedräkningen -->
-    <video id="birthdayVideo" src="birthday.mp4" controls></video>
-
-    <script>
-        const audio = document.getElementById("bgMusic");
-        const unmuteBtn = document.getElementById("unmuteBtn");
-        const envelope = document.getElementById("envelope");
-        const popupMessage = document.getElementById("popupMessage");
-        const birthdayVideo = document.getElementById("birthdayVideo");
-        const message = document.getElementById("message");
-        const h1 = document.querySelector("h1");
-        const timerDiv = document.getElementById("timer");
-        let countdownFinished = false;
-
-        // Unmute-knappen
-        unmuteBtn.addEventListener("click", () => {
-            if (audio.muted) {
-                audio.muted = false;
-                audio.play();
-                unmuteBtn.textContent = "Mute Music";
-            } else {
-                audio.muted = true;
-                unmuteBtn.textContent = "Unmute Music";
-            }
-        });
-
-        // Kuvert-klick
-        envelope.addEventListener("click", () => {
-            if (!countdownFinished) {
-                popupMessage.textContent = "Patiente jusqu’à la fin du compte à rebours pour l’ouvrir ❤️";
-                popupMessage.style.display = "block";
-                setTimeout(() => popupMessage.style.display = "none", 3000);
-            } else {
-                // Stäng av musiken när videon startar
-                audio.muted = true;
-                unmuteBtn.textContent = "Unmute Music";
-
-                // Visa video + spela i helskärm
-                birthdayVideo.style.display = "block";
-                birthdayVideo.play();
-
-                if (birthdayVideo.requestFullscreen) {
-                    birthdayVideo.requestFullscreen();
-                } else if (birthdayVideo.webkitRequestFullscreen) { 
-                    birthdayVideo.webkitRequestFullscreen();
-                } else if (birthdayVideo.msRequestFullscreen) { 
-                    birthdayVideo.msRequestFullscreen();
-                }
-            }
-        });
-
-        // Hjärtan som faller
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-            heart.style.opacity = (Math.random() * 0.5 + 0.5);
-            document.body.appendChild(heart);
-
-            heart.addEventListener('animationend', () => {
-                heart.remove();
-            });
-        }
-        setInterval(createHeart, 300);
-
-        // Countdown
-        const countDownDate = new Date("Aug 20, 2025 00:00:00").getTime();
-
-        function finishCountdown() {
-            countdownFinished = true;
-            document.body.style.background = "#000"; 
-            h1.style.display = "none";
-            timerDiv.style.display = "none";
-            message.style.display = "block";
-        }
-
-        let countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-
-            if (distance > 0) {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                timerDiv.textContent = `${days}j ${hours}h ${minutes}m ${seconds}s`;
-            } else {
-                clearInterval(countdownInterval);
-                finishCountdown();
-            }
-        }, 1000);
-    </script>
+    <h1>Bonjour étranger,</h1>
+    <p>tu me manques ❤️</p>
 </body>
 </html>
